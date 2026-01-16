@@ -21,6 +21,10 @@ public class stepsort {
                 sortarray[row][id] = temparray[id];
             }
         }
+        for (int col1 = 0; col1 < sortarray[0].length; col1++){
+
+            for (int row1 = 0; row1 < sortarray.length; )
+        }
     }
 
     public void sort(int[] passarray, String mode){
