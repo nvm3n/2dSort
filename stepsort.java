@@ -9,6 +9,7 @@ public class stepsort {
     public void execute(String mode){
         int[] temparray = new int[3];
 
+        //sort rows
         for (int row = 0; row < sortarray.length; row++){
 
             for (int col = 0; col < sortarray[row].length; col++){
@@ -21,22 +22,45 @@ public class stepsort {
                 sortarray[row][id] = temparray[id];
             }
         }
-        for (int col1 = 0; col1 < sortarray[0].length; col1++){
 
-            for (int row1 = 0; row1 < sortarray.length; )
+        //sort columns
+        for (int col1 = 0; col1 < sortarray[col1].length; col++){
+
+            for (int row1 = 0; row1 < sortarray.length; row1++){
+                temparray[col1] = sortarray[row1][col1];
+            }
+
+            sort(temparray, mode);
+
+            for (int id = 0; id < sortarray.length; id++){
+                sortarray[row1][id] = temparray[id];
+            }
         }
+        
     }
 
     public void sort(int[] passarray, String mode){
         int[] temparray = new int[3];
         switch (mode) {
             case "bubble":
-                break;
 
+                for (int i = 0; i< temparray.length - 1; i++) {
+                    for ( int j = 0; j < temparray.length - 1 - i; j++) {
+                        if (temparray[j] > temparray[j + 1]) {
+                        int temp = temparray[j];
+                        temparray[j] = temparray[j + 1];
+                        temparray[j + 1] = temp;
+                    }
+                }
+                return temparray;
+            }
             case "insertion":
-                break;
+
+                
+
 
             default:
+                System.out.printerr
                 break;
         }
 
