@@ -2,6 +2,7 @@
 
 public class stepsort {
     private int[][] sortarray = { new int[3], new int[3]};//this is (should be) adjustable :)
+    //external array needed for quicksort
     private int[] qsarray;
 
     public stepsort()
@@ -12,6 +13,7 @@ public class stepsort {
     }
 
     public void execute(String mode){
+        //get current time for runtime calculation
         double start = System.nanoTime();
         //sort rows
         for (int row = 0; row < sortarray.length; row++){
@@ -29,6 +31,7 @@ public class stepsort {
             }
         }
 
+        //cosmetic text this can be removed if class is changed to return for other classes
         System.out.println("Step 1:");
         for (int row[] : sortarray){
             printarray(row);
@@ -48,16 +51,19 @@ public class stepsort {
                 sortarray[id][col1] = temparray[id];
             }
         }
-
+        
+        //cosmetic text this can be removed if class is changed to return for other classes
         System.out.println("Step 2:");
         for (int row[] : sortarray){
             printarray(row);
         }
 
+        //get end time
         double end = System.nanoTime();
+        //calculate and print total runtime
         double runtime = (end - start);
         System.out.println();
-        System.out.println("Execution Runtime: " + runtime/1000000 + "ms");
+        System.out.println("Execution Runtime: " + runtime/1000000 + "ms");//nanotime returns in nanoseconds
     }
 
     public int[] sort(int[] passarray, String mode){
@@ -108,6 +114,7 @@ public class stepsort {
                 return temparray;
             
             case "quick":
+                //call external quicksort (recursive, not in place)
                 quicksort(temparray, 0, temparray.length - 1);
                 return qsarray;
 
@@ -118,6 +125,7 @@ public class stepsort {
 
     }
 
+    //within the entire quicksort electron (negative) is the lower bound proton (positive) is the upper bound and neutron (neutral) is the pivot. The counterparts correspond to these (eg. positron corresponds to electron)
     public void quicksort(int []passarray, int elektron, int proton){
         if(elektron >= 0 && proton >= 0 && elektron < proton){
             int neutron = kernspaltung(passarray, elektron, proton);
@@ -126,27 +134,34 @@ public class stepsort {
         }
     }
 
+    //For the partitioning scheme Hoare´s one is used as it is more efficient than the standard Lomuto scheme, although it might be more difficult to understand
     public int kernspaltung(int[] passarray, int elektron, int proton){
         qsarray = passarray;
         int antineutron = qsarray[elektron];
         int positron = elektron - 1;
         int antiproton = proton + 1;
         boolean running = true;
+        //quarkcluster is our temporary variable used for swaps
         int quarkcluster;
+        //this partition scheme moves the pointers toward each other, until they collide
         while(running){
+            //on the left side, move through the array until an element isnt smaller then the pivot
             do{
                 positron++;
             }while(qsarray[positron]<antineutron);
 
+            //on the right side, move through the array until an element isnt larger then the pivot
             do{
                 antiproton--;
             }while(qsarray[antiproton]>antineutron);
 
+            //check if the pointers have crossed
             if(positron>=antiproton){
                 running = false;
                 return antiproton;
             }
-
+            
+            //swap elements
             quarkcluster = qsarray[positron];
             qsarray[positron] = qsarray[antiproton];
             qsarray[antiproton] = quarkcluster;
@@ -155,18 +170,24 @@ public class stepsort {
         return -10;
     }
 
+    //fill the array with random numbers
     public void arrayfill(){
+        //go through every row inside the array
         for (int row = 0; row < sortarray.length; row++){
+            //go through every element inside the element
             for (int col = 0; col < sortarray[row].length; col++){
+                //fill the individual elements with a random number (100 is the range as math random returns a value from 0-1)
                 sortarray[row][col] = (int)(Math.random()*100);
             }
         }
+        //go through each element with a for each loop, this executes for every element in the array with the counter carrying the respective value from the array
         for (int row[] : sortarray){
             printarray(row);
         }
         System.out.println();
     }
 
+    //goes through a onedimensional array printing each element with a for each loop
     public void printarray(int[] passarray){
         for (int entry : passarray){
             System.out.print(entry + " ");
@@ -174,9 +195,12 @@ public class stepsort {
         System.out.println();
     }
 
+    //execution method
     public static void main(String[] args) {
         
+        //create a new object
         stepsort matrixsorter = new stepsort();
+        //variable is needed for the reroll function
         boolean running = true;
         try(final Scanner inputscanner = new Scanner(System.in)){
             while(running){
